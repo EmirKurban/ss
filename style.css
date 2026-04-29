@@ -127,3 +127,15 @@ body {
   color: white;
   cursor: pointer;
 }
+
+.main-title {
+  font-size: 48px;
+  color: #ff2f7d;
+  text-align: center;
+  margin: 0 0 12px;
+  font-weight: 900;
+}
+
+.hero {
+  flex-direction: column;
+}
