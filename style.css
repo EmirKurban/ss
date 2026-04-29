@@ -1,0 +1,15 @@
+body {
+  text-align: center;
+  font-family: Arial;
+  background: #fff0f5;
+}
+
+h1 {
+  color: #ff4d6d;
+}
+
+.gallery img {
+  width: 200px;
+  margin: 10px;
+  border-radius: 15px;
+}
