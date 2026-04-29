@@ -1,21 +1,58 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Kocamı Çok Seviyorum ❤️</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biz ❤️</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<h1>❤️ Kocamı Çok Seviyorum ❤️</h1>
+  <main class="container">
 
-<p>Sen benim her şeyimsin 💕</p>
+    <!-- SADE ÜST ALAN (yazı yok) -->
+    <section class="hero">
+      <div class="heart">❤️</div>
+    </section>
 
-<div class="gallery">
-  <img src="foto1.jpg">
-  <img src="foto2.jpg">
-  <img src="foto3.jpg">
-</div>
+    <!-- FOTO GALERİ -->
+    <section class="card">
+      <div class="tabs">
+        <button class="tab active">Fotoğraflarımız</button>
+      </div>
+
+      <div class="gallery">
+        <img src="WhatsApp Image 2026-02-09 at 14.45.48.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.45.50.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.47.22.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.47.27.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.47.28 (1).jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.47.28.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.49.13 (1).jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.49.13.jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.55.44 (1).jpeg" onclick="openPhoto(this.src)">
+        <img src="WhatsApp Image 2026-02-09 at 14.55.44.jpeg" onclick="openPhoto(this.src)">
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BÜYÜTME (MODAL) -->
+  <div class="modal" id="modal" onclick="closePhoto()">
+    <span class="close">×</span>
+    <img id="modalImg" />
+  </div>
+
+  <script>
+    function openPhoto(src) {
+      document.getElementById("modalImg").src = src;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function closePhoto() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
