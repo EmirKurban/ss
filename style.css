@@ -10,16 +10,15 @@ body {
   padding: 20px;
 }
 
-/* HERO */
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120px;
+  height: 90px;
 }
 
 .heart {
-  font-size: 40px;
+  font-size: 42px;
   animation: pulse 1.5s infinite;
 }
 
@@ -29,7 +28,6 @@ body {
   100% { transform: scale(1); }
 }
 
-/* CARD */
 .card {
   background: white;
   padding: 25px;
@@ -37,27 +35,41 @@ body {
   box-shadow: 0 15px 40px rgba(255, 100, 150, 0.15);
 }
 
-/* TAB */
 .tabs {
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
 .tab {
-  background: #ff4d88;
-  color: white;
+  background: #ffd6e5;
+  color: #ff3f82;
   border: none;
-  padding: 12px 30px;
+  padding: 12px 28px;
   border-radius: 999px;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-/* GALERİ */
+.tab.active {
+  background: #ff4d88;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 15px;
+  gap: 18px;
 }
 
 .gallery img {
@@ -74,7 +86,23 @@ body {
   transform: scale(1.05);
 }
 
-/* MODAL */
+.dates-list {
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.dates-list li {
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 18px;
+  background: #fff0f6;
+}
+
 .modal {
   display: none;
   position: fixed;
