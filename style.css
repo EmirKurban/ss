@@ -157,3 +157,17 @@ body {
   from { transform: translateY(100vh); }
   to { transform: translateY(-10vh); }
 }
+
+.bg-text {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(40px, 8vw, 120px);
+  font-weight: 900;
+  color: rgba(255, 47, 125, 0.08);
+  text-align: center;
+  pointer-events: none;
+  z-index: 0;
+}
