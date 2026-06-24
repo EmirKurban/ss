@@ -273,3 +273,30 @@ body {
 .love-note p{
   margin-bottom:18px;
 }
+
+.note-hidden {
+  display: none;
+}
+
+.note-hidden.active {
+  display: block;
+}
+
+.tabs {
+  margin-top: 30px;
+}
+
+.love-note {
+  animation: noteFade 0.4s ease;
+}
+
+@keyframes noteFade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
