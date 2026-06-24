@@ -232,3 +232,27 @@ body {
 .gallery-section{
     margin-top:50px !important;
 }
+
+.hero {
+  height: auto !important;
+  min-height: unset !important;
+  margin-bottom: 70px !important;
+}
+
+.big-wife-photo {
+  display: block !important;
+  position: static !important;
+  width: min(90vw, 720px) !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  margin: 35px auto 90px !important;
+  border-radius: 32px !important;
+  z-index: auto !important;
+}
+
+.card {
+  position: relative !important;
+  z-index: 2 !important;
+  margin-top: 40px !important;
+}
