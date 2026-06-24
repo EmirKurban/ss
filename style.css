@@ -300,3 +300,19 @@ body {
     transform: translateY(0);
   }
 }
+
+#note.tab-content {
+  display: none;
+}
+
+#note.tab-content.active {
+  display: block;
+}
+
+#photos.tab-content {
+  display: none;
+}
+
+#photos.tab-content.active {
+  display: block;
+}

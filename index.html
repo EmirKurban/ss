@@ -28,7 +28,8 @@
 
   <section class="card">
     <div class="tabs">
-      <button class="tab active" onclick="toggleNote()">Sevgiliye Not 💌</button>
+      <button class="tab active" onclick="showTab('photos', this)">Fotoğraflarımız</button>
+      <button class="tab" onclick="showTab('note', this)">Sevgiliye Not 💌</button>
     </div>
 
     <div id="photos" class="tab-content">
@@ -43,7 +44,7 @@
     </div>
 
     
-    <div id="note" class="tab-content note-hidden">
+    <div id="note" class="tab-content">
       <div class="love-note">
         <p>Benim güzel sevgilim, seni galaksiler kadar çok seviyorum.</p>
 
@@ -87,10 +88,7 @@
     button.classList.add('active');
   }
 
-  function toggleNote() {
-    const note = document.getElementById("note");
-    note.classList.toggle("active");
-  }
+
 
   function openPhoto(src) {
     document.getElementById("modalImg").src = src;
