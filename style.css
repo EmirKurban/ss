@@ -216,3 +216,19 @@ body {
   border-radius: 32px;
   box-shadow: 0 24px 70px rgba(255, 47, 125, 0.28);
 }
+
+.big-wife-photo{
+    display:block;
+    width:min(700px,90%);
+    margin:40px auto 80px auto !important;
+    position:relative !important;
+    z-index:1 !important;
+}
+
+.apology-banner{
+    margin-bottom:40px !important;
+}
+
+.gallery-section{
+    margin-top:50px !important;
+}
