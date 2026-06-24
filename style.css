@@ -188,3 +188,20 @@ body {
   text-shadow: 0 10px 35px rgba(255, 47, 125, 0.22);
   pointer-events: none;
 }
+
+.apology-banner {
+  text-align: center;
+  font-size: clamp(40px, 7vw, 90px);
+  font-weight: 1000;
+  line-height: 1.1;
+  color: #ff1f6b;
+  margin: 20px 0 40px;
+  text-shadow: 0 6px 25px rgba(255, 31, 107, 0.35);
+  animation: pulseBanner 1.5s infinite;
+}
+
+@keyframes pulseBanner {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
