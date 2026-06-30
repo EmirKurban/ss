@@ -380,8 +380,8 @@ body {
   position: fixed;
   left: 50%;
   top: 50%;
-  width: 470px;
-  height: 580px;
+  width: min(860px, 92vw);
+  height: min(840px, 88vh);
   margin: 0;
   transform-origin: 50% 50%;
   /* closed: tiny, parked on the right where the envelope is */
@@ -531,12 +531,12 @@ body.bouquet-out .bouquet{
   transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
 body.bouquet-set .bouquet{
-  transform: translate(-50%, -50%) scale(1.04) rotate(2deg);
+  transform: translate(-50%, -50%) scale(1) rotate(2deg);
   animation: bouquetSway 5.5s ease-in-out 1.4s infinite alternate;
 }
 @keyframes bouquetSway{
-  from{ transform: translate(-50%, -50%) scale(1.04) rotate(2deg); }
-  to  { transform: translate(-50%, -51%) scale(1.05) rotate(-2deg); }
+  from{ transform: translate(-50%, -50%) scale(1) rotate(2deg); }
+  to  { transform: translate(-50%, -50%) scale(1) rotate(-2deg); }
 }
 
 /* once opened, the envelope itself fades out of the way */
