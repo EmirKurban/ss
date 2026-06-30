@@ -619,11 +619,15 @@ body.bouquet-set .love-letter{
 }
 .love-letter.open .ll-seal{ opacity:0; transform:scale(.3); }
 .ll-hint{
-  position:absolute; top:-26px; left:50%; transform:translateX(-50%);
-  white-space:nowrap; font-size:11px; font-weight:700; color:#ff3f82;
-  background:rgba(255,255,255,.9); padding:3px 9px; border-radius:999px;
-  box-shadow:0 3px 10px rgba(255,79,139,.3);
-  animation:hintBob 1.6s ease-in-out infinite;
+  position:absolute; top:-30px; left:50%; transform:translateX(-50%);
+  white-space:nowrap; font-size:13px; font-weight:800; color:#ff2f7d;
+  background:rgba(255,255,255,.95); padding:4px 11px; border-radius:999px;
+  box-shadow:0 4px 12px rgba(255,79,139,.4);
+  animation:hintBob 1.3s ease-in-out infinite;
+}
+.ll-hint::after{
+  content:""; position:absolute; bottom:-5px; left:50%; margin-left:-5px;
+  border:5px solid transparent; border-top-color:rgba(255,255,255,.95);
 }
 .love-letter.open .ll-hint{ opacity:0; transition:opacity .3s; }
 
@@ -706,16 +710,16 @@ body.bouquet-set .love-letter{
     height: 118px;
   }
   .bouquet{
-    width: 340px;
-    height: 420px;
+    width: min(440px, 96vw);
+    height: min(620px, 76vh);
     /* closed: parked low-centre near the envelope */
     transform: translate(-50%, calc(-50% + 42vh)) scale(.1) rotate(0deg);
   }
   body.bouquet-out .bouquet{
-    transform: translate(-50%, -50%) scale(.74) rotate(0deg);
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
   }
   body.bouquet-set .bouquet{
-    transform: translate(-50%, -50%) scale(.76) rotate(2deg);
+    transform: translate(-50%, -50%) scale(1) rotate(2deg);
     animation: none;
   }
 }
