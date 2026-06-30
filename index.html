@@ -89,10 +89,29 @@
   <div class="env-note">Seni çok seviyorum ❤️</div>
   <div class="env-stage">
     <div class="env-back"></div>
-    <div class="bouquet" id="bouquet"></div>
+    <div class="bouquet" id="bouquet">
+      <img class="bouquet-photo" src="bouquet.jpg" alt="Çiçekler ❤️">
+      <!-- second, smaller letter tucked into the bouquet -->
+      <div class="love-letter" id="loveLetter">
+        <div class="ll-hint">beni de aç 💌</div>
+        <div class="ll-back"></div>
+        <div class="ll-front"></div>
+        <div class="ll-flap" id="llFlap"></div>
+        <div class="ll-seal">❤</div>
+      </div>
+    </div>
     <div class="env-front"></div>
     <div class="env-flap" id="envFlap"></div>
     <div class="env-seal">❤</div>
+  </div>
+</div>
+
+<!-- the readable letter that opens from the second envelope -->
+<div class="letter-overlay" id="letterOverlay">
+  <div class="letter-paper">
+    <span class="letter-close" id="letterClose">×</span>
+    <p>Sana alamadığım tüm çiçekler için özür dilerim, belki bu sabah yanında uyanamadım ama en azından uyandığında suratına bi gülümseme koyucak olduğumu bilmek, içimdeki tüm kara bulutları dağıtmaya yetiyor.</p>
+    <div class="letter-sign">Seni çok seviyorum ❤️</div>
   </div>
 </div>
 
@@ -136,107 +155,33 @@ setInterval(() => {
 
 
 <script>
-/* ===== Build a lush peony bouquet as SVG ===== */
-(function(){
-  const NS = "http://www.w3.org/2000/svg";
-
-  // one ring of petals around (0,0)
-  function petalRing(count, dist, rx, ry, fill, startAngle){
-    let s = "";
-    for(let i=0;i<count;i++){
-      const a = startAngle + i*(360/count);
-      s += `<ellipse cx="0" cy="${-dist}" rx="${rx}" ry="${ry}" fill="${fill}"
-              transform="rotate(${a})" />`;
-    }
-    return s;
-  }
-
-  // a single peony bloom
-  function peony(x, y, scale, rot){
-    return `<g transform="translate(${x},${y}) scale(${scale}) rotate(${rot})">
-      ${petalRing(10, 36, 17, 27, "#ffd7e4", 0)}
-      ${petalRing(10, 28, 15, 23, "#ffbed6", 18)}
-      ${petalRing(8,  19, 12, 18, "#ff9ec1", 9)}
-      ${petalRing(7,  11,  9, 14, "#ff7eb0", 24)}
-      ${petalRing(6,   6,  6,  9, "#f96aa0", 12)}
-      <circle r="6" fill="#ffd98a"/>
-      <circle r="2.5" fill="#f6b94c"/>
-    </g>`;
-  }
-
-  // a leaf
-  function leaf(x, y, scale, rot){
-    return `<g transform="translate(${x},${y}) scale(${scale}) rotate(${rot})">
-      <path d="M0,0 C 14,-18 14,-42 0,-60 C -14,-42 -14,-18 0,0 Z"
-            fill="#6fae66"/>
-      <path d="M0,-4 L0,-54" stroke="#4f8f49" stroke-width="2"/>
-    </g>`;
-  }
-
-  const svg =
-  `<svg viewBox="0 0 300 360" xmlns="${NS}">
-     <!-- wrapping cone tucked into envelope -->
-     <path d="M150,360 L96,200 Q150,224 204,200 Z" fill="#fdeede"/>
-     <path d="M150,360 L96,200 Q150,224 204,200 Z" fill="none"
-           stroke="#f3d6c2" stroke-width="2"/>
-     <!-- stems -->
-     <g stroke="#5b9a55" stroke-width="4" fill="none" stroke-linecap="round">
-       <path d="M150,250 C 140,210 120,180 96,150"/>
-       <path d="M150,250 C 150,200 150,170 150,140"/>
-       <path d="M150,250 C 160,210 182,180 206,152"/>
-       <path d="M150,250 C 132,215 120,205 70,196"/>
-       <path d="M150,250 C 168,215 184,205 232,196"/>
-     </g>
-     <!-- leaves -->
-     ${leaf(78,200,1.0,-28)}
-     ${leaf(224,200,1.0,28)}
-     ${leaf(120,176,0.85,-12)}
-     ${leaf(186,176,0.85,14)}
-     <!-- back blooms -->
-     ${peony(96,150,0.78,-8)}
-     ${peony(206,152,0.78,10)}
-     <!-- mid blooms -->
-     ${peony(70,118,0.92,-14)}
-     ${peony(232,120,0.92,12)}
-     ${peony(150,108,1.0,0)}
-     <!-- front blooms -->
-     ${peony(112,96,1.06,-6)}
-     ${peony(190,98,1.06,6)}
-     ${peony(150,70,1.12,0)}
-   </svg>`;
-
-  document.getElementById("bouquet").innerHTML = svg;
-
-  /* ===== Drag-to-open logic ===== */
-  const env  = document.getElementById("giftEnvelope");
-  const flap = document.getElementById("envFlap");
+/* ===== Reusable drag-to-open flap controller ===== */
+function makeDraggableFlap(opts){
+  const flap = document.getElementById(opts.flapId);
+  if(!flap) return;
   let dragging = false, startY = 0, angle = 0, opened = false;
-  const MAX = 172;            // fully open angle
-  const THRESHOLD = 80;       // angle past which it snaps fully open
+  const MAX = opts.max || 172;
+  const THRESHOLD = opts.threshold || 80;
 
   function setAngle(a){
     angle = Math.max(0, Math.min(MAX, a));
     flap.style.transform = "rotateX(-" + angle + "deg)";
     if(angle > MAX*0.55) flap.style.zIndex = 0;
   }
-
   function open(){
     if(opened) return;
     opened = true;
-    env.classList.remove("dragging");
-    env.classList.add("opened");
-    flap.style.transform = "";        // hand back to CSS class
+    flap.style.transform = "";
     flap.style.zIndex = "";
-    // settle the bouquet toward the edge a moment after it emerges
-    setTimeout(() => env.classList.add("settled"), 1100);
+    opts.onOpen && opts.onOpen();
   }
-
+  function canStart(){ return opts.enabled ? opts.enabled() : true; }
   function down(e){
-    if(opened) return;
+    if(opened || !canStart()) return;
     dragging = true;
     startY = (e.touches ? e.touches[0].clientY : e.clientY);
-    env.classList.add("dragging");
-    e.preventDefault();
+    flap.classList.add("grabbing");
+    e.preventDefault(); e.stopPropagation();
   }
   function move(e){
     if(!dragging || opened) return;
@@ -247,20 +192,54 @@ setInterval(() => {
   function up(){
     if(!dragging) return;
     dragging = false;
-    env.classList.remove("dragging");
-    if(angle > THRESHOLD){ open(); }
-    else { setAngle(0); }            // snap closed if not dragged enough
+    flap.classList.remove("grabbing");
+    if(angle > THRESHOLD) open(); else setAngle(0);
   }
-
   flap.addEventListener("mousedown", down);
   window.addEventListener("mousemove", move);
   window.addEventListener("mouseup", up);
   flap.addEventListener("touchstart", down, {passive:false});
   window.addEventListener("touchmove", move, {passive:false});
   window.addEventListener("touchend", up);
+  // tapping the flap also opens it
+  flap.addEventListener("click", (e) => {
+    if(!opened && angle < 5 && canStart()){ e.stopPropagation(); open(); }
+  });
+}
 
-  // a click on the flap also opens (in case dragging feels fiddly)
-  flap.addEventListener("click", () => { if(!opened && angle < 5) open(); });
+/* ===== 1) The big gift envelope -> reveals the bouquet ===== */
+(function(){
+  const env = document.getElementById("giftEnvelope");
+  makeDraggableFlap({
+    flapId: "envFlap",
+    onOpen(){
+      env.classList.add("opened");
+      setTimeout(() => env.classList.add("settled"), 1100);
+    }
+  });
+})();
+
+/* ===== 2) The small letter on the bouquet -> reveals the message ===== */
+(function(){
+  const env     = document.getElementById("giftEnvelope");
+  const letter  = document.getElementById("loveLetter");
+  const overlay = document.getElementById("letterOverlay");
+  const close   = document.getElementById("letterClose");
+
+  makeDraggableFlap({
+    flapId: "llFlap",
+    // only interactive once the bouquet has settled into view
+    enabled: () => env.classList.contains("settled"),
+    onOpen(){
+      letter.classList.add("open");
+      setTimeout(() => overlay.classList.add("show"), 450);
+    }
+  });
+
+  function hide(){ overlay.classList.remove("show"); }
+  close.addEventListener("click", hide);
+  overlay.addEventListener("click", (e) => { if(e.target === overlay) hide(); });
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") hide(); });
 })();
 </script>
 </body>
