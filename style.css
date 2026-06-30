@@ -375,21 +375,23 @@ body {
 }
 
 /* the bouquet lives behind the front pocket, above the back */
+/* bouquet is fixed and glides to the centre of the viewport */
 .bouquet{
-  position: absolute;
+  position: fixed;
   left: 50%;
-  bottom: 50%;
-  width: 420px;
-  height: 520px;
-  margin-left: -210px;
-  transform-origin: 50% 100%;
-  transform: translateY(10px) scale(0.07) rotate(0deg);
+  top: 50%;
+  width: 470px;
+  height: 580px;
+  margin: 0;
+  transform-origin: 50% 50%;
+  /* closed: tiny, parked on the right where the envelope is */
+  transform: translate(calc(-50% + 42vw), -50%) scale(0.08) rotate(0deg);
   opacity: 0;
-  z-index: 2;
+  z-index: 140;
   pointer-events: none;
-  transition: transform 1.5s cubic-bezier(.22,.9,.25,1),
-              opacity .6s ease;
-  filter: drop-shadow(0 18px 30px rgba(190, 60, 110, 0.30));
+  transition: transform 1.6s cubic-bezier(.22,.9,.25,1),
+              opacity .7s ease;
+  filter: drop-shadow(0 22px 36px rgba(190, 60, 110, 0.32));
 }
 
 /* the real bouquet photo, framed */
@@ -523,22 +525,29 @@ body {
   transform:translateX(-50%) translateY(0) scale(1);
 }
 
-/* OPEN states for the bouquet (rises and centers vertically) */
-.gift-envelope.opened .bouquet{
+/* OPEN: bouquet glides to the centre of the screen and grows */
+body.bouquet-out .bouquet{
   opacity:1;
-  transform: translateY(260px) scale(1) rotate(0deg);
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
-.gift-envelope.settled .bouquet{
-  transform: translateY(260px) translateX(-22px) scale(1.02) rotate(4deg);
-}
-
-/* gentle idle sway once settled (leans into the page edge) */
-.gift-envelope.settled .bouquet{
-  animation: bouquetSway 5s ease-in-out 1.6s infinite alternate;
+body.bouquet-set .bouquet{
+  transform: translate(-50%, -50%) scale(1.04) rotate(2deg);
+  animation: bouquetSway 5.5s ease-in-out 1.4s infinite alternate;
 }
 @keyframes bouquetSway{
-  from{ transform: translateY(260px) translateX(-22px) scale(1.02) rotate(3deg); }
-  to  { transform: translateY(254px) translateX(-12px) scale(1.03) rotate(5deg); }
+  from{ transform: translate(-50%, -50%) scale(1.04) rotate(2deg); }
+  to  { transform: translate(-50%, -51%) scale(1.05) rotate(-2deg); }
+}
+
+/* once opened, the envelope itself fades out of the way */
+.gift-envelope.opened .env-back,
+.gift-envelope.opened .env-front,
+.gift-envelope.opened .env-flap,
+.gift-envelope.opened .env-seal,
+.gift-envelope.opened .env-hint{
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .9s ease .35s;
 }
 
 /* ============================================================
@@ -559,12 +568,12 @@ body {
   pointer-events:none;
   transition:opacity .6s ease, transform .7s cubic-bezier(.22,.9,.25,1);
 }
-/* appear once the bouquet has settled */
-.gift-envelope.settled .love-letter{
+/* appear once the bouquet has settled at the centre */
+body.bouquet-set .love-letter{
   opacity:1;
   transform:scale(1) translateY(0);
   pointer-events:auto;
-  transition-delay:1.1s;
+  transition-delay:.8s;
 }
 
 .ll-back{
@@ -657,15 +666,15 @@ body {
 }
 .letter-paper p{
   margin:0;
-  font-family:"Dancing Script","Segoe Script",cursive;
-  font-weight:600;
-  font-size:31px; line-height:1.65; color:#43321c; text-align:left;
-  text-shadow:0 1px 0 rgba(255,250,235,.4);
+  font-family:"Parisienne","Dancing Script","Segoe Script",cursive;
+  font-weight:400;
+  font-size:33px; line-height:1.55; color:#3c2c14; text-align:left;
+  text-shadow:0 1px 0 rgba(255,250,235,.45);
 }
 .letter-sign{
-  margin-top:30px; text-align:right;
-  font-family:"Dancing Script","Segoe Script",cursive;
-  font-size:34px; font-weight:700; color:#7a1530;
+  margin-top:26px; text-align:right;
+  font-family:"Parisienne","Dancing Script","Segoe Script",cursive;
+  font-size:38px; font-weight:400; color:#7a1530;
 }
 /* little wax seal at the foot of the letter */
 .letter-paper::after{
@@ -697,16 +706,16 @@ body {
     height: 118px;
   }
   .bouquet{
-    width: 320px;
-    height: 400px;
-    margin-left: -160px;
-    bottom: 40px;
+    width: 340px;
+    height: 420px;
+    /* closed: parked low-centre near the envelope */
+    transform: translate(-50%, calc(-50% + 42vh)) scale(.1) rotate(0deg);
   }
-  .gift-envelope.opened .bouquet{
-    transform: translateY(-30px) scale(.92) rotate(0deg);
+  body.bouquet-out .bouquet{
+    transform: translate(-50%, -50%) scale(.74) rotate(0deg);
   }
-  .gift-envelope.settled .bouquet{
-    transform: translateY(-30px) scale(.94) rotate(3deg);
+  body.bouquet-set .bouquet{
+    transform: translate(-50%, -50%) scale(.76) rotate(2deg);
     animation: none;
   }
 }

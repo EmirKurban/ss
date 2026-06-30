@@ -6,7 +6,7 @@
   <title>Biz ❤️</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -49,26 +49,25 @@
 
 </main>
 
-<!-- ===== Draggable gift envelope with peony bouquet ===== -->
+<!-- ===== Draggable gift envelope ===== -->
 <div class="gift-envelope" id="giftEnvelope">
   <div class="env-hint">↓ kapağı aç</div>
-  <div class="env-note">Seni çok seviyorum ❤️</div>
   <div class="env-stage">
     <div class="env-back"></div>
-    <div class="bouquet" id="bouquet">
-      <img class="bouquet-photo" src="bouquet.jpg" alt="Çiçekler ❤️">
-      <!-- second, smaller letter tucked into the bouquet -->
-      <div class="love-letter" id="loveLetter">
-        <div class="ll-hint">beni de aç 💌</div>
-        <div class="ll-back"></div>
-        <div class="ll-front"></div>
-        <div class="ll-flap" id="llFlap"></div>
-        <div class="ll-seal">❤</div>
-      </div>
-    </div>
     <div class="env-front"></div>
     <div class="env-flap" id="envFlap"></div>
     <div class="env-seal">❤</div>
+  </div>
+</div>
+
+<!-- bouquet glides to the centre of the screen, independent of the envelope -->
+<div class="bouquet" id="bouquet">
+  <img class="bouquet-photo" src="bouquet.jpg" alt="Çiçekler ❤️">
+  <div class="love-letter" id="loveLetter">
+    <div class="ll-back"></div>
+    <div class="ll-front"></div>
+    <div class="ll-flap" id="llFlap"></div>
+    <div class="ll-seal">❤</div>
   </div>
 </div>
 
@@ -173,21 +172,23 @@ function makeDraggableFlap(opts){
   });
 }
 
-/* ===== 1) The big gift envelope -> reveals the bouquet ===== */
+/* ===== 1) The big gift envelope -> bouquet flies to screen centre ===== */
 (function(){
-  const env = document.getElementById("giftEnvelope");
+  const env  = document.getElementById("giftEnvelope");
+  const body = document.body;
   makeDraggableFlap({
     flapId: "envFlap",
     onOpen(){
-      env.classList.add("opened");
-      setTimeout(() => env.classList.add("settled"), 1100);
+      env.classList.add("opened");          // fades the envelope away
+      body.classList.add("bouquet-out");    // bouquet glides to centre + grows
+      setTimeout(() => body.classList.add("bouquet-set"), 1300);
     }
   });
 })();
 
 /* ===== 2) The small letter on the bouquet -> reveals the message ===== */
 (function(){
-  const env     = document.getElementById("giftEnvelope");
+  const body    = document.body;
   const letter  = document.getElementById("loveLetter");
   const overlay = document.getElementById("letterOverlay");
   const close   = document.getElementById("letterClose");
@@ -195,7 +196,7 @@ function makeDraggableFlap(opts){
   makeDraggableFlap({
     flapId: "llFlap",
     // only interactive once the bouquet has settled into view
-    enabled: () => env.classList.contains("settled"),
+    enabled: () => body.classList.contains("bouquet-set"),
     onOpen(){
       letter.classList.add("open");
       setTimeout(() => overlay.classList.add("show"), 450);
