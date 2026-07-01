@@ -102,10 +102,10 @@
       .slice(0, activeIndex + 1)
       .map((w, i) => {
         if (i === activeIndex) {
-          // newest word cascades in letter by letter, like it's being written
+          // newest word pours in letter by letter, like it's being written
           const letters = w
             .split("")
-            .map((ch, li) => `<span class="reel-letter" style="animation-delay:${li * 0.06}s">${ch === " " ? "&nbsp;" : ch}</span>`)
+            .map((ch, li) => `<span class="reel-letter" style="animation-delay:${li * 0.09}s">${ch === " " ? "&nbsp;" : ch}</span>`)
             .join("");
           return `<span class="reel-word reel-word-new">${letters}</span>`;
         }

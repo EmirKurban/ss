@@ -224,17 +224,18 @@ body {
   margin: 0 6px;
 }
 
-/* newest word writes itself onto the screen, letter by letter */
+/* newest word pours itself onto the screen, letter by letter */
 .reel-letter {
   display: inline-block;
   opacity: 0;
-  transform: translateY(18px) rotate(-8deg) scale(0.6);
-  animation: reelLetterIn 1s cubic-bezier(.16,1,.3,1) forwards;
+  transform: translateY(-24px) rotate(-10deg) scale(0.5);
+  animation: reelLetterIn 1.35s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 @keyframes reelLetterIn {
-  0%   { opacity: 0; transform: translateY(18px) rotate(-8deg) scale(0.6); }
-  55%  { opacity: 1; }
+  0%   { opacity: 0; transform: translateY(-24px) rotate(-10deg) scale(0.5); }
+  50%  { opacity: 1; }
+  75%  { transform: translateY(5px) rotate(4deg) scale(1.06); }
   100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
 }
 
