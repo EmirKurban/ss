@@ -35,14 +35,8 @@
     </div>
 
     <div id="photos" class="tab-content">
-      <div class="gallery">
-        <img src="PHOTO-2026-01-15-21-53-36.jpg" onclick="openPhoto(this.src)">
-        <img src="PHOTO-2026-01-30-17-17-19.jpg" onclick="openPhoto(this.src)">
-        <img src="PHOTO-2026-02-02-17-50-55.jpg" onclick="openPhoto(this.src)">
-        <img src="PHOTO-2026-02-02-18-06-12.jpg" onclick="openPhoto(this.src)">
-        <img src="PHOTO-2026-02-14-17-08-03.jpg" onclick="openPhoto(this.src)">
-        <img src="PHOTO-2026-02-16-14-35-28.jpg" onclick="openPhoto(this.src)">
-      </div>
+      <p class="gallery-intro">Birlikte biriktirdiğimiz her an ❤️</p>
+      <div class="gallery" id="gallery"></div>
     </div>
 
   </section>
@@ -83,7 +77,12 @@
 
 <div class="modal" id="modal" onclick="closePhoto()">
   <span class="close">×</span>
-  <img id="modalImg" />
+  <span class="modal-nav modal-prev" onclick="event.stopPropagation(); prevPhoto()">‹</span>
+  <span class="modal-nav modal-next" onclick="event.stopPropagation(); nextPhoto()">›</span>
+  <div class="modal-frame" onclick="event.stopPropagation()">
+    <img id="modalImg" />
+    <div class="modal-caption" id="modalCaption"></div>
+  </div>
 </div>
 
 <script>
@@ -96,14 +95,59 @@
 
 
 
-  function openPhoto(src) {
-    document.getElementById("modalImg").src = src;
+  /* ===== Anılarımız (our memories) gallery =====
+     To add a new photo: drop the image file in this folder, then add
+     one line below: { src: "filename.jpg", caption: "your caption" } */
+  const photos = [
+    { src: "PHOTO-2026-01-15-21-53-36.jpg", caption: "15 Ocak 2026" },
+    { src: "PHOTO-2026-01-30-17-17-19.jpg", caption: "30 Ocak 2026" },
+    { src: "PHOTO-2026-02-02-17-50-55.jpg", caption: "2 Şubat 2026" },
+    { src: "PHOTO-2026-02-02-18-06-12.jpg", caption: "2 Şubat 2026" },
+    { src: "PHOTO-2026-02-14-17-08-03.jpg", caption: "14 Şubat 2026 💕 Sevgililer Günü" },
+    { src: "PHOTO-2026-02-16-14-35-28.jpg", caption: "16 Şubat 2026" },
+    { src: "WhatsApp Image 2026-07-02 at 00.43.57.jpeg", caption: "2 Temmuz 2026" },
+    { src: "WhatsApp Image 2026-07-02 at 00.46.01.jpeg", caption: "2 Temmuz 2026" },
+  ];
+
+  let currentPhoto = 0;
+
+  function renderGallery() {
+    const grid = document.getElementById("gallery");
+    grid.innerHTML = photos.map((p, i) => `
+      <figure class="polaroid" style="--r:${(i % 2 === 0 ? -1 : 1) * (3 + (i % 3))}deg" onclick="openPhoto(${i})">
+        <img src="${p.src}" alt="${p.caption || ''}" loading="lazy">
+        <figcaption>${p.caption || ""}</figcaption>
+      </figure>
+    `).join("");
+  }
+
+  function showPhoto(i) {
+    currentPhoto = (i + photos.length) % photos.length;
+    const p = photos[currentPhoto];
+    document.getElementById("modalImg").src = p.src;
+    document.getElementById("modalCaption").textContent = p.caption || "";
+  }
+
+  function openPhoto(i) {
+    showPhoto(i);
     document.getElementById("modal").style.display = "flex";
   }
 
   function closePhoto() {
     document.getElementById("modal").style.display = "none";
   }
+
+  function nextPhoto() { showPhoto(currentPhoto + 1); }
+  function prevPhoto() { showPhoto(currentPhoto - 1); }
+
+  document.addEventListener("keydown", (e) => {
+    if (document.getElementById("modal").style.display !== "flex") return;
+    if (e.key === "ArrowRight") nextPhoto();
+    if (e.key === "ArrowLeft") prevPhoto();
+    if (e.key === "Escape") closePhoto();
+  });
+
+  renderGallery();
 </script>
 
 
