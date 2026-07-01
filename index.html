@@ -85,11 +85,12 @@
     { src: "PHOTO-2026-02-16-14-35-28.jpg" },
     { src: "WhatsApp Image 2026-07-02 at 00.43.57.jpeg" },
     { src: "WhatsApp Image 2026-07-02 at 00.46.01.jpeg" },
+    { src: "WhatsApp Image 2026-07-02 at 01.09.39.jpeg" },
     { src: "PHOTO-2026-01-15-21-53-36.jpg" },
   ];
 
   /* word revealed per reel position — builds up as you advance */
-  const reelWords = ["Seni", "her", "şeyinle", "çok", "seviyorum", "sen", "benim", "irmik helvamsın"];
+  const reelWords = ["Seni", "her", "şeyinle", "çok", "seviyorum", "sen", "benim", "irmik", "helvamsın"];
 
   let activeIndex = 0;
   let currentPhoto = 0;
@@ -99,7 +100,17 @@
   function updateMessage() {
     reelMessage.innerHTML = reelWords
       .slice(0, activeIndex + 1)
-      .map((w, i) => `<span class="reel-word${i === activeIndex ? " reel-word-new" : ""}">${w}</span>`)
+      .map((w, i) => {
+        if (i === activeIndex) {
+          // newest word cascades in letter by letter, like it's being written
+          const letters = w
+            .split("")
+            .map((ch, li) => `<span class="reel-letter" style="animation-delay:${li * 0.06}s">${ch === " " ? "&nbsp;" : ch}</span>`)
+            .join("");
+          return `<span class="reel-word reel-word-new">${letters}</span>`;
+        }
+        return `<span class="reel-word">${w}</span>`;
+      })
       .join(" ");
   }
 
